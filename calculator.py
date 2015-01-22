@@ -7,97 +7,72 @@ class OperationPanel(Frame):
     def __init__(self, app, operation):
         Frame.__init__(self, app)
         if operation == "addition":
-            Label(app, text="Addition:").pack()
-            self.num1 = Entry(app)
+            self.oper = "add"
+            Label(self, text="Addition:", fg="blue").pack()
+            self.num1 = Entry(self)
             self.num1.pack(side = LEFT)
-            self.num2 = Entry(app)
+            self.num2 = Entry(self)
             self.num2.pack(side = LEFT)
-            self.disp = Entry(app)
+            self.disp = Entry(self)
             self.disp.pack(side = LEFT)
-            Button(app, text="Reset", command=self.reset_add).pack(side = RIGHT)
-            Button(app, text="Add!",  command=self.calc_add).pack(side = RIGHT)
+            Button(self, text="Reset", command=self.reset).pack(side = RIGHT)
+            Button(self, text="Add!",  command=self.calc).pack(side = RIGHT)
             
         elif operation == "subtraction":
-            Label(app, text="Subtraction:").pack()
-            self.num1 = Entry(app)
+            self.oper = "sub"
+            Label(self, text="Subtraction:", fg="blue").pack()
+            self.num1 = Entry(self)
             self.num1.pack(side = LEFT)
-            self.num2 = Entry(app)
+            self.num2 = Entry(self)
             self.num2.pack(side = LEFT)
-            self.disp = Entry(app)
+            self.disp = Entry(self)
             self.disp.pack(side = LEFT)
-            Button(app, text="Reset", command=self.reset_sub).pack(side = RIGHT)
-            Button(app, text="Subtract!", command=self.calc_sub).pack(side = RIGHT)
+            Button(self, text="Reset", command=self.reset).pack(side = RIGHT)
+            Button(self, text="Subtract!", command=self.calc).pack(side = RIGHT)
             
         elif operation == "multiplication":
-            Label(app, text="Multiplication:").pack()
-            self.num1 = Entry(app)
+            self.oper = "mul"
+            Label(self, text="Multiplication:", fg="blue").pack()
+            self.num1 = Entry(self)
             self.num1.pack(side = LEFT)
-            self.num2 = Entry(app)
+            self.num2 = Entry(self)
             self.num2.pack(side = LEFT)
-            self.disp = Entry(app)
+            self.disp = Entry(self)
             self.disp.pack(side = LEFT)
-            Button(app, text="Reset", command=self.reset_mul).pack(side = RIGHT)
-            Button(app, text="Multiply!",  command=self.calc_mul).pack(side = RIGHT)
+            Button(self, text="Reset", command=self.reset).pack(side = RIGHT)
+            Button(self, text="Multiply!",  command=self.calc).pack(side = RIGHT)
 
         elif operation == "division":
-            Label(app, text="Division:").pack()
-            self.num1 = Entry(app)
+            self.oper = "div"
+            Label(self, text="Division:", fg="blue").pack()
+            self.num1 = Entry(self)
             self.num1.pack(side = LEFT)
-            self.num2 = Entry(app)
+            self.num2 = Entry(self)
             self.num2.pack(side = LEFT)
-            self.disp = Entry(app)
+            self.disp = Entry(self)
             self.disp.pack(side = LEFT)
-            Button(app, text="Reset", command=self.reset_div).pack(side = RIGHT)
-            Button(app, text="Divide!",  command=self.calc_div).pack(side = RIGHT)
+            Button(self, text="Reset", command=self.reset).pack(side = RIGHT)
+            Button(self, text="Divide!",  command=self.calc).pack(side = RIGHT)
 
            
-    def calc_add(self):
+    def calc(self):
         num1 = int(self.num1.get())
         num2 = int(self.num2.get())
         self.disp.delete(0, END)
-        self.disp.insert(0, str(num1 + num2))
+
+        if self.oper == "add":
+            self.disp.insert(0, str(num1 + num2))
+        elif self.oper == "sub":
+            self.disp.insert(0, str(num1 - num2))
+        elif self.oper == "mul":
+            self.disp.insert(0, str(num1 * num2))
+        elif self.oper == "div":
+            self.disp.insert(0, str(num1 / num2))
+
+    def reset(self):
         self.num1.delete(0, END)
         self.num2.delete(0, END)
-
-    def reset_add(self):
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
-
-    def calc_sub(self):
-        num1 = int(self.num1.get())
-        num2 = int(self.num2.get())
         self.disp.delete(0, END)
-        self.disp.insert(0, str(num1 - num2))
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
-
-    def reset_sub(self):
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
-
-    def calc_mul(self):
-        num1 = int(self.num1.get())
-        num2 = int(self.num2.get())
-        self.disp.delete(0, END)
-        self.disp.insert(0, str(num1 * num2))
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
-
-    def reset_mul(self):
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
-
-    def calc_div(self):
-        num1 = int(self.num1.get())
-        num2 = int(self.num2.get())
-        self.disp.delete(0, END)
-        self.disp.insert(0, str(num1 / num2))
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
-
-    def reset_div(self):
-        self.num1.delete(0, END)
-        self.num2.delete(0, END)
 
     
 app = Tk()
@@ -106,9 +81,9 @@ app.title("My calculator")
 sounds = pygame.mixer
 sounds.init()
 
-OperationPanel(app, "addition").pack()
-OperationPanel(app, "subtraction").pack()
-OperationPanel(app, "multiplication").pack()
-OperationPanel(app, "division").pack()
+OperationPanel(app, "addition").pack(fill=X)
+OperationPanel(app, "subtraction").pack(fill=X)
+OperationPanel(app, "multiplication").pack(fill=X)
+OperationPanel(app, "division").pack(fill=X)
 
 app.mainloop()
