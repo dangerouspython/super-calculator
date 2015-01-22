@@ -8,7 +8,7 @@ class OperationPanel(Frame):
         Frame.__init__(self, app)
 
         self.oper = operation[0:3]
-        Label(self, text=operation, fg="blue").pack()
+        Label(self, text=operation, fg="#FFFFFF").pack()
         self.num1 = Entry(self)
         self.num1.pack(side = LEFT)
         self.num2 = Entry(self)
