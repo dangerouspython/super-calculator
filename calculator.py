@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 from tkinter import *
+import tkinter.messagebox
 import pygame.mixer
 
 class EmptyFrame(Frame):
@@ -26,7 +27,7 @@ class OperationPanel(Frame):
         OpLabelFrame(app, operation).pack(side = TOP, expand = True, fill = X,
                                           padx = 4)
         
-        self.num1 = Entry(self, width = 10) 
+        self.num1 = Entry(self, width = 10, font = "Helvetica") 
         self.num1.pack(padx = 4, side = LEFT)
         
         if self.oper == "Add":
@@ -40,12 +41,12 @@ class OperationPanel(Frame):
             
         Label(self, text=text_, fg="Blue").pack(side = LEFT)
         
-        self.num2 = Entry(self, width = 10)
+        self.num2 = Entry(self, width = 10, font = "Helvetica")
         self.num2.pack(side = LEFT, padx = 4)
         
         Label(self, text="=", fg="Blue").pack(side=LEFT)
         
-        self.disp = Entry(self, width = 15)
+        self.disp = Entry(self, width = 15, font = "Helvetica")
         self.disp.pack(side = LEFT, padx = 4)
         
         Button(self, text="Reset", command=self.reset,
@@ -55,10 +56,15 @@ class OperationPanel(Frame):
                font="Helvetica").pack(side = RIGHT)
            
     def calc(self):
-        num1 = float(self.num1.get())
-        num2 = float(self.num2.get())
-        self.disp.delete(0, END)
+        try:
+            num1 = float(self.num1.get())
+            num2 = float(self.num2.get())
+        except:
+            tkinter.messagebox.showerror("Error!", "Entered values are not numbers.")
+            return None
 
+        self.disp.delete(0, END)
+            
         if self.oper == "Add":
             self.disp.insert(0, str(num1 + num2))
         elif self.oper == "Sub":
